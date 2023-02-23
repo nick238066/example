@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::prefix('test')->name('test.')->group(function () {
+    Route::get('create', TestController::class . '@create')->name('create');
+    Route::post('enter', TestController::class . '@enter')->name('enter');
+    Route::get('game/{token}', TestController::class . '@game')->name('game');
+
+    Route::get('error', TestController::class . '@error')->name('error');
 });
