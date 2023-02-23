@@ -36,7 +36,11 @@ class TestController extends Controller
 
     public function game(request $request, string $token)
     {
-        return view('welcome');
+        $data = [
+            'token' => $token,
+        ];
+
+        return view('test.game', $data);
     }
 
     public function error(request $request)
