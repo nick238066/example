@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\AdminUser;
 
 class BroadcastLotteryMessage extends Command
 {
@@ -11,7 +12,7 @@ class BroadcastLotteryMessage extends Command
      *
      * @var string
      */
-    protected $signature = 'command:sendBroadcastLotteryMessage';
+    protected $signature = 'command:sendBroadcastLotteryMessage {--agent_id= : 代理ID}';
 
     /**
      * The console command description.
@@ -41,11 +42,15 @@ class BroadcastLotteryMessage extends Command
     public function handle()
     {
         // php artisan command:sendBroadcastLotteryMessage
+        $agent_id = $this->option('agent_id');
+        $agent = AdminUser::find($agent_id);
+        $token = $agent->substation->token ?? null;
+
         while (1) {
             for ($i = 5; $i > 0; $i--) {
                 $waitMessage = "遊戲開始倒數: {$i}秒";
                 $this->line($waitMessage);
-                broadcast(new \App\Events\NewTrade($waitMessage));
+                $this->sendBroadcastMessage($token, $waitMessage);
                 sleep(1);
             }
             $rate = $this->randomFloat(1, 2);
@@ -54,7 +59,7 @@ class BroadcastLotteryMessage extends Command
             for ($i = 0; $i <= $runNum; $i++) {
                 $nowRate = (100 + $i) / pow(10, $this->decimal);
                 $this->line("print now rate: " . $nowRate);
-                broadcast(new \App\Events\NewTrade($nowRate));
+                $this->sendBroadcastMessage($token, $nowRate);
                 usleep($this->m_sleep(250)); // 1秒 = 1000毫秒
             }
             $this->info("Rate: " . ($rate) . "\n");
@@ -72,5 +77,15 @@ class BroadcastLotteryMessage extends Command
 
     function m_sleep($milliseconds) {
         return usleep($milliseconds * 1000); //Microseconds->milliseconds
+    }
+
+    function sendBroadcastMessage($token, $message)
+    {
+        if ($token) {
+            broadcast(new \App\Events\NewGame($token, $message));
+        } else {
+            broadcast(new \App\Events\NewTrade($message));
+        }
+
     }
 }

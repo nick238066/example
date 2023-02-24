@@ -28,7 +28,7 @@
     Echo.private('game.{{$token}}')
         .listen('NewGame', (e) => {
             console.log(e);
-            // document.getElementById('latest_trade_user').innerText = e.trade;
+            document.getElementById('latest_trade_user').innerText = e.trade;
         })
 </script>
 @endsection

@@ -22,5 +22,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('game.{token}', function ($user, $token) {
     // return (int) $user->id === (int) Substation::where('token', $token)->first()->owner->$id;
     logger('aaa');
+    logger($token);
     return true;
 });

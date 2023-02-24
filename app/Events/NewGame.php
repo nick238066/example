@@ -14,18 +14,18 @@ class NewGame implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
     public $token;
+    public $trade;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($user, $token)
+    public function __construct($token, $trade)
     {
-        $this->user = $user;
         $this->token = $token;
+        $this->trade = $trade;
     }
 
     /**
@@ -37,13 +37,5 @@ class NewGame implements ShouldBroadcast
     {
         // return new PrivateChannel('channel-name');
         return new PrivateChannel('game.' . $this->token);
-        // return new Channel('game.' . $this->token);
     }
-
-    // public function broadcastWith()
-    // {
-    //     return [
-
-    //     ];
-    // }
 }
