@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\AdminUser;
+use App\Models\User;
 
 class SendChatMessage extends Command
 {
@@ -40,8 +40,7 @@ class SendChatMessage extends Command
     {
         $message = $this->argument('message');
         // event(new \App\Events\NewTrade($message));
-        $user = AdminUser::find(2);
-        $token = "a16ec740-cef7-42e1-bb63-cbb06f9911c5";
-        event(new \App\Events\NewGame($user, $token, $message));
+        $user = User::find(1);
+        event(new \App\Events\UserMessage($user, $message));
     }
 }

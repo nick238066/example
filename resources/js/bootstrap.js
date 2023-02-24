@@ -35,4 +35,14 @@ window.Echo = new Echo({
     wsPort: 6001,
     forceTLS: false,
     disableStats: true,
+    // authEndpoint: '/api/broadcasting/auth',
+    // auth:{
+    //     headers:{
+    //         // 'authorization': 'Bearer ' + api_token 
+    //         // 'Authorization': 'Bearer ' + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9icm9hZGNhc3QtdGVzdC5sYXJhdmVsLmNvbVwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY3NzIyMzU0NSwiZXhwIjoxNjc3MjI3MTQ1LCJuYmYiOjE2NzcyMjM1NDUsImp0aSI6IkRhZXpmRmNsSExRN252U04iLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.eIqPhAPctpLitL2Vn_hHQddRrVKjUOVFxAKbZmPmz0I"
+    //         'Authorization': 'Bearer ' + token
+    //     }
+    // }
 });
+
+console.log(token + "123");

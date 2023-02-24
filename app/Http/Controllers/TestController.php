@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Exception;
 use App\Models\AdminUser;
+use Auth;
 
 class TestController extends Controller
 {
@@ -23,6 +24,15 @@ class TestController extends Controller
             }
 
             $substation = $agent->substation;
+
+            $credentials = request(['email', 'password']);
+            // if (! $token = auth('api')->attempt($credentials)) {
+            //     throw new Exception("401 Unauthorized");
+            // }
+
+            if (!Auth::attempt($credentials, true)) {
+                throw new Exception("401 Unauthorized");
+            }
 
             return redirect()->route('test.game', [
                 'token' => $substation->token,

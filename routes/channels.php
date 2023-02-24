@@ -18,10 +18,3 @@ use App\Models\Substation;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
-
-Broadcast::channel('game.{token}', function ($user, $token) {
-    // return (int) $user->id === (int) Substation::where('token', $token)->first()->owner->$id;
-    logger('aaa');
-    logger($token);
-    return true;
-});

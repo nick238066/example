@@ -15,6 +15,9 @@
                                 <p>
                                     <span id="latest_trade_user"></span>
                                 </p>
+                                <p>
+                                    <span id="user_message"></span>
+                                </p>
                             </h3>
                         </div>
                     </div>
@@ -25,10 +28,16 @@
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
-    Echo.private('game.{{$token}}')
+    Echo.channel('game.{{$token}}')
         .listen('NewGame', (e) => {
             console.log(e);
             document.getElementById('latest_trade_user').innerText = e.trade;
+        })
+
+    Echo.private('App.Models.User.{{Auth::user()->id}}')
+        .listen('UserMessage', (e) => {
+            console.log(e);
+            document.getElementById('user_message').innerText = e.message;
         })
 </script>
 @endsection

@@ -10,22 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NewGame implements ShouldBroadcast
+class UserMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $token;
-    public $trade;
+    public $user_id;
+    public $message;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($token, $trade)
+    public function __construct($user, $message)
     {
-        $this->token = $token;
-        $this->trade = $trade;
+        $this->user_id = $user->id;
+        $this->message = $message;
     }
 
     /**
@@ -35,7 +35,6 @@ class NewGame implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        // return new PrivateChannel('channel-name');
-        return new Channel('game.' . $this->token);
+        return new PrivateChannel('App.Models.User.' . $this->user_id);
     }
 }
